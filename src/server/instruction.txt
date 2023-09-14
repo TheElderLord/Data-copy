@@ -1,0 +1,6 @@
+1. db-fetcher/all-server-fetcher.js
+2.sorting/server-sorting.js
+3.db-insertion/server-insertion.js
+4. sender/sender-sender.js
+
+5.constoller/serverController.js
