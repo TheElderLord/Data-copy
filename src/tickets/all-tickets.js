@@ -53,7 +53,15 @@ async function fetchTickets(online) { //fethes all tickets from all servers, ret
             (element) => element["@"]
             
           );
-          tickets.push(extractedTickets);
+          const todayTickets = extractedTickets.map(e=>{
+            if(isDateTodayAndLaterThan9AM(e.starttime)){
+              return e.starttime
+            }
+            
+          })
+          console.log(todayTickets);
+          // tickets.push(extractedTickets);
+          tickets.push(todayTickets);
           // console.log('Tickets:', extractedTickets);
           // resolve(extractedTickets);
         } else {
@@ -72,5 +80,24 @@ async function fetchTickets(online) { //fethes all tickets from all servers, ret
   
   return tickets;
 }
+
+const isDateTodayAndLaterThan9AM = (timestamp) => {
+  // Convert the timestamp to a Date object
+  const date = new Date(timestamp);
+
+  // Get the current date
+  const currentDate = new Date();
+
+  // Check if the date is today
+  const isToday = date.getDate() === currentDate.getDate() &&
+                  date.getMonth() === currentDate.getMonth() &&
+                  date.getFullYear() === currentDate.getFullYear();
+
+  // Check if the time is later than 9 AM
+  const isLaterThan9AM = date.getHours() > 9 || 
+                         (date.getHours() === 9 && date.getMinutes() > 0);
+
+  return isToday && isLaterThan9AM;
+};
 
 module.exports = fetchTickets;
